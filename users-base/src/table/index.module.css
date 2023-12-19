@@ -1,0 +1,30 @@
+table,
+td,
+th {
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  padding: 15px;
+}
+
+.table {
+  width: 900px;
+  margin: 0 auto;
+}
+
+.checkBox_header_wrapper {
+  text-align: center;
+}
+
+.checkBox_header {
+  width: 20px;
+  height: 20px;
+}

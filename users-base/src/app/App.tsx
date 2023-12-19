@@ -27,3 +27,16 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 export const db = getFirestore(app);
 export const auth = getAuth(app);
+
+const App = () => {
+  const [isRegistrationActive, setIsRegistrationActive] = useState(true);
+
+  return (
+    <>
+      {isRegistrationActive ? <Registration setIsRegistrationActive={setIsRegistrationActive} isRegistrationActive={isRegistrationActive}/> : <Authentication setIsRegistrationActive={setIsRegistrationActive} isRegistrationActive={isRegistrationActive}/>}
+      <Table />
+    </>
+  );
+};
+
+export default App;

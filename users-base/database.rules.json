@@ -5,3 +5,28 @@
     ".write": false
   }
 }
+
+// {
+//   "rules": {
+//     // Firebase Realtime Database rules
+//     ".read": false,
+//     ".write": false,
+
+//     // Firebase Storage rules
+//     "storage": {
+//       ".read": "auth != null",
+//       ".write": "auth != null"
+//     }
+//   },
+//   "rules_version": "2",
+//   "service": {
+//     "firebase": {
+//       "database": {
+//         "url": "https://your-firebase-project-id.firebaseio.com"
+//       },
+//       "storage": {
+//         "bucket": "your-firebase-storage-bucket.appspot.com"
+//       }
+//     }
+//   }
+// }

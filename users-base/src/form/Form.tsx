@@ -3,23 +3,21 @@ import PasswordInput from "../inputs/password-input";
 import NameInput from "../inputs/name-input";
 import css from "./index.module.css";
 import { ChangeEvent, useState } from "react";
-// import { collection, doc, setDoc } from "firebase/firestore";
-// import { db } from "../app/App";
-// import firebase from "firebase/compat/app";
-// import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 
 interface IForm {
   title: string;
-  emailInput: boolean;
-  passwordInput: boolean;
+  emailInput?: boolean;
+  passwordInput?: boolean;
   nameInput?: boolean;
   buttonText: string;
-  alternativeText: string;
-  alternativeLink: string;
-  alternativeLinkText: string;
-  handleSubmit: (value: {}) => void;
-  isRegistrationActive: boolean;
-  setIsRegistrationActive: (value: boolean) => void;
+  alternativeText?: string;
+  alternativeLink?: string;
+  alternativeLinkText?: string;
+  handleSubmit: (value: { email: string; name: string }) => void;
+  isRegistrationActive?: boolean;
+  setIsRegistrationActive?: (value: boolean) => void;
+  message?: string;
+  link?: boolean
 }
 
 const Form = ({
@@ -32,7 +30,9 @@ const Form = ({
   alternativeLinkText,
   handleSubmit,
   setIsRegistrationActive,
-  isRegistrationActive
+  isRegistrationActive,
+  message,
+  link
 }: IForm) => {
   const [value, setValue] = useState({
     name: "",
@@ -52,7 +52,7 @@ const Form = ({
 
   const changeForm = () => {
     setIsRegistrationActive(!isRegistrationActive);
-  }
+  };
 
   return (
     <section className={css.form_wrapper}>
@@ -72,9 +72,12 @@ const Form = ({
         </button>
       </form>
       <div className={css.alternative}>
+        {message && <p className={css.error_message}>{message}</p>}
         <p>
           {alternativeText}
-          <button onClick={changeForm} className={css.switching_button}>{alternativeLinkText}</button>
+          <button onClick={changeForm} className={css.switching_button}>
+            {alternativeLinkText}
+          </button>
         </p>
       </div>
     </section>

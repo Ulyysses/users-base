@@ -2,6 +2,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
 .form {
@@ -11,6 +13,11 @@
 
 .alternative {
   padding-top: 15px;
+  text-align: center;
+}
+
+.error_message {
+  color: #F60414;
 }
 
 .title {

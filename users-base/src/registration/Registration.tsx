@@ -2,6 +2,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { collection, doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../app/App";
 import Form from "../form";
+import unchecked from '../assets/images/unchecked.svg'
 
 const Registration = ({ setIsRegistrationActive, isRegistrationActive }) => {
   const registrationButton = async (value) => {
@@ -39,7 +40,6 @@ const Registration = ({ setIsRegistrationActive, isRegistrationActive }) => {
       passwordInput={true}
       buttonText="Sign up"
       alternativeText="Already have an account?"
-      alternativeLink="../authentication"
       alternativeLinkText=" Login"
       handleSubmit={registrationButton}
     />

@@ -6,7 +6,7 @@ import {
 import header from "../assets/images/header.svg";
 import css from "./index.module.css";
 import { db } from "../app/App";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 const Table = () => {
@@ -15,7 +15,7 @@ const Table = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const collectionRef = collection(db, "users-base"); // Обратите внимание, что здесь нет дополнительного параметра для указания документа
+      const collectionRef = collection(db, "users-base");
       const querySnapshot = await getDocs(collectionRef);
 
       const userData = [];
@@ -31,7 +31,7 @@ const Table = () => {
 
   const columns = [
     {
-      accessorKey: "password",
+      accessorKey: "checkbox",
       header: () => (
         <div className={css.checkBox_header_wrapper}>
           <img src={header} alt="Checkbox" className={css.checkBox_header} />

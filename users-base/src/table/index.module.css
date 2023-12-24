@@ -8,16 +8,12 @@ th {
 table {
   border-collapse: collapse;
   width: 100%;
+  margin-top: 10px;
 }
 
 th,
 td {
   padding: 15px;
-}
-
-.table {
-  width: 900px;
-  margin: 0 auto;
 }
 
 .checkBox_header_wrapper {

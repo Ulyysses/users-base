@@ -2,10 +2,20 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { collection, doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../app/App";
 import Form from "../form";
-import unchecked from '../assets/images/unchecked.svg'
+import { useState } from "react";
 
-const Registration = ({ setIsRegistrationActive, isRegistrationActive }) => {
-  const registrationButton = async (value) => {
+interface IRegistration {
+  setActiveComponent: (value: string) => void;
+}
+
+const Registration = ({setActiveComponent}: IRegistration) => {
+  const [registrationMessage, setRegistrationMessage] = useState("");
+
+  const registrationButton = async (value: {
+    email: string;
+    password: string;
+    name: string;
+  }) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -23,7 +33,7 @@ const Registration = ({ setIsRegistrationActive, isRegistrationActive }) => {
           name: value.name,
         });
 
-        console.log("New user added to Firestore!");
+        setRegistrationMessage("New user added to Firestore!");
       }
     } catch (error) {
       console.error("Error adding new user:", error);
@@ -32,16 +42,17 @@ const Registration = ({ setIsRegistrationActive, isRegistrationActive }) => {
 
   return (
     <Form
-      setIsRegistrationActive={setIsRegistrationActive}
-      isRegistrationActive={isRegistrationActive}
       title="Registration"
       emailInput={true}
       nameInput={true}
       passwordInput={true}
       buttonText="Sign up"
       alternativeText="Already have an account?"
-      alternativeLinkText=" Login"
+      alternativeLinkText="Login"
       handleSubmit={registrationButton}
+      setActiveComponent={setActiveComponent}
+      activeComponent="Authentication"
+      message={registrationMessage}
     />
   );
 };

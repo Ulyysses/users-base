@@ -1,5 +1,4 @@
 import { ChangeEvent } from "react";
-import css from "./index.module.css";
 
 interface IEmailInputProps {
   value: {

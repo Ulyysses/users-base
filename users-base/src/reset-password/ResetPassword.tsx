@@ -3,7 +3,11 @@ import { auth } from "../app/App";
 import Form from "../form";
 import { useState } from "react";
 
-const ResetPassword = () => {
+interface IResetPassword {
+  setActiveComponent: (value: string) => void;
+}
+
+const ResetPassword = ({setActiveComponent}: IResetPassword) => {
   const [resetMessage, setResetMessage] = useState("");
 
   const resetPasswordButton = (value: { email: string }) => {
@@ -22,13 +26,15 @@ const ResetPassword = () => {
 
   return (
     <Form
-      message={resetMessage}
       title="Reset password"
       emailInput={true}
       buttonText="Send"
-      alternativeText="Check your email and "
-      alternativeLinkText=" Sign in"
+      alternativeText="Check your email and"
+      alternativeLinkText="Sign in"
       handleSubmit={resetPasswordButton}
+      message={resetMessage}
+      setActiveComponent={setActiveComponent}
+      activeComponent="Authentication"
     />
   );
 };

@@ -10,14 +10,12 @@ interface IForm {
   passwordInput?: boolean;
   nameInput?: boolean;
   buttonText: string;
-  alternativeText?: string;
-  alternativeLink?: string;
-  alternativeLinkText?: string;
-  handleSubmit: (value: { email: string; name: string }) => void;
-  isRegistrationActive?: boolean;
-  setIsRegistrationActive?: (value: boolean) => void;
+  alternativeText: string;
+  alternativeLinkText: string;
+  handleSubmit: (value: { email: string; name: string, password: string }) => void;
   message?: string;
-  link?: boolean
+  setActiveComponent: (value: string) => void;
+  activeComponent: string;
 }
 
 const Form = ({
@@ -29,10 +27,9 @@ const Form = ({
   alternativeText,
   alternativeLinkText,
   handleSubmit,
-  setIsRegistrationActive,
-  isRegistrationActive,
   message,
-  link
+  setActiveComponent,
+  activeComponent
 }: IForm) => {
   const [value, setValue] = useState({
     name: "",
@@ -50,8 +47,8 @@ const Form = ({
     setValue(newValue);
   };
 
-  const changeForm = () => {
-    setIsRegistrationActive(!isRegistrationActive);
+  const changeActiveComponent = () => {
+    setActiveComponent(activeComponent);
   };
 
   return (
@@ -75,7 +72,7 @@ const Form = ({
         {message && <p className={css.error_message}>{message}</p>}
         <p>
           {alternativeText}
-          <button onClick={changeForm} className={css.switching_button}>
+          <button onClick={changeActiveComponent} className={css.switching_button}>
             {alternativeLinkText}
           </button>
         </p>

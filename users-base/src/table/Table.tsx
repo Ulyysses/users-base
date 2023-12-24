@@ -1,28 +1,41 @@
 import {
+  RowSelectionState,
   flexRender,
   getCoreRowModel,
   useReactTable,
+  OnChangeFn,
+  Row,
 } from "@tanstack/react-table";
-import header from "../assets/images/header.svg";
 import css from "./index.module.css";
 import { db } from "../app/App";
 import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import IndeterminateCheckbox from "../indeterminate-checkbox";
 
-const Table = () => {
-  const [data, setData] = useState([]);
-  // const [loading, setLoading] = useState(false);
+interface UserData {
+  checkbox: boolean;
+  name: string;
+  email: string;
+  lastlogin: string;
+  status: string;
+}
+
+interface ITable {
+  setSelectedRows: OnChangeFn<RowSelectionState>;
+  selectedRows: RowSelectionState;
+}
+
+const Table = ({ setSelectedRows, selectedRows }: ITable) => {
+  const [data, setData] = useState<UserData[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const collectionRef = collection(db, "users-base");
       const querySnapshot = await getDocs(collectionRef);
-
-      const userData = [];
+      const userData: UserData[] = [];
       querySnapshot.forEach((doc) => {
-        userData.push(doc.data());
+        userData.push(doc.data() as UserData);
       });
-
       setData(userData);
     };
 
@@ -33,9 +46,23 @@ const Table = () => {
     {
       accessorKey: "checkbox",
       header: () => (
-        <div className={css.checkBox_header_wrapper}>
-          <img src={header} alt="Checkbox" className={css.checkBox_header} />
-        </div>
+        <IndeterminateCheckbox
+          {...{
+            checked: table.getIsAllRowsSelected(),
+            indeterminate: table.getIsSomeRowsSelected(),
+            onChange: table.getToggleAllRowsSelectedHandler(),
+          }}
+        />
+      ),
+      cell: ({ row }: { row: Row<UserData> }) => (
+        <IndeterminateCheckbox
+          {...{
+            checked: row.getIsSelected(),
+            disabled: !row.getCanSelect(),
+            indeterminate: row.getIsSomeSelected(),
+            onChange: row.getToggleSelectedHandler(),
+          }}
+        />
       ),
     },
     {
@@ -59,12 +86,13 @@ const Table = () => {
   const table = useReactTable({
     data,
     columns,
+    state: {
+      rowSelection: selectedRows,
+    },
     getCoreRowModel: getCoreRowModel(),
+    enableMultiRowSelection: true,
+    onRowSelectionChange: setSelectedRows, 
   });
-
-  // if (loading) {
-  //   return <p>Loading...</p>;
-  // }
 
   return (
     <div className={css.table}>

@@ -5,15 +5,23 @@ import { auth, db } from "../app/App";
 import { formatLastLoginDate } from "../helpers/formateDate";
 import { useState } from "react";
 
+interface IAuthentication {
+  setIsAuthenticated: (value: boolean) => void;
+  setUserName: (value: string) => void;
+  setActiveComponent: (value: string) => void;
+}
+
 const Authentication = ({
   setIsAuthenticated,
   setUserName,
-  setIsRegistrationActive,
-  isRegistrationActive,
-}) => {
+  setActiveComponent
+}: IAuthentication) => {
   const [errorMessage, setErrorMessage] = useState("");
 
-  const authenticationButton = async (value) => {
+  const authenticationButton = async (value: {
+    email: string;
+    password: string;
+  }) => {
     try {
       setErrorMessage("");
       if (!value.email || !value.password) {
@@ -52,16 +60,16 @@ const Authentication = ({
 
   return (
     <Form
-      message={errorMessage}
-      setIsRegistrationActive={setIsRegistrationActive}
-      isRegistrationActive={isRegistrationActive}
       title="Login"
       emailInput={true}
       passwordInput={true}
       buttonText="Sign in"
       alternativeText="Forgot your password?"
-      alternativeLinkText=" Reset password"
+      alternativeLinkText="Reset password"
       handleSubmit={authenticationButton}
+      message={errorMessage}
+      setActiveComponent={setActiveComponent}
+      activeComponent="Reset password"
     />
   );
 };

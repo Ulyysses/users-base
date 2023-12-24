@@ -30,7 +30,7 @@
   background-color: #ffffff;
   border: none;
 
-  &:hover {
+  /* &:hover {
     text-decoration: underline;
-  }
+  } */
 }

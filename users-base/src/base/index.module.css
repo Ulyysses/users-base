@@ -32,9 +32,9 @@
   background-color: #e2e2e2;
   color: #085ED6;
 
-  &:hover {
+  /* & ::hover {
     text-decoration: underline;
-  }
+  } */
 }
 
 .table_container {

@@ -1,5 +1,5 @@
 import { sendPasswordResetEmail } from "firebase/auth";
-import { auth } from "../app/App";
+import { auth } from "../app/page";
 import Form from "../form";
 import { useState } from "react";
 

@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { auth, db } from "../app/App";
+import { auth, db } from "../app/page";
 import Table from "../table";
 import css from "./index.module.css";
 import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import { RowSelectionState } from "@tanstack/react-table";
+import { deleteUserAdmin } from "../app/actions";
 
 interface IBase {
   userName: string;
@@ -41,6 +42,13 @@ const Base = ({ userName, setIsAuthenticated }: IBase) => {
       for (const index of indexes) {
         const docUidToDelete = documentsUid[index];
         const userDocRef = doc(db, "users-base", docUidToDelete);
+
+        auth.currentUser?.getIdToken(true).then(function(idToken) {
+          deleteUserAdmin(docUidToDelete, idToken);
+        }).catch(function(error) {
+          console.log(error);
+          
+        });
 
         await deleteDoc(userDocRef);
 

@@ -7,10 +7,11 @@ import {
   Row,
 } from "@tanstack/react-table";
 import css from "./index.module.css";
-import { db } from "../app/App";
+import { db } from "../app/page";
 import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import IndeterminateCheckbox from "../indeterminate-checkbox";
+import "./table.css";
 
 interface UserData {
   checkbox: boolean;

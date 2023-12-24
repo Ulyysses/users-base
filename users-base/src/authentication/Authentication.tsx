@@ -1,7 +1,7 @@
 import Form from "../form";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { auth, db } from "../app/App";
+import { auth, db } from "../app/page";
 import { formatLastLoginDate } from "../helpers/formateDate";
 import { useState } from "react";
 

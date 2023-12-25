@@ -6,9 +6,8 @@ import {
   OnChangeFn,
   Row,
 } from "@tanstack/react-table";
-import css from "./index.module.css";
 import { db } from "../app/page";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import IndeterminateCheckbox from "../indeterminate-checkbox";
 import "./table.css";
@@ -92,11 +91,11 @@ const Table = ({ setSelectedRows, selectedRows }: ITable) => {
     },
     getCoreRowModel: getCoreRowModel(),
     enableMultiRowSelection: true,
-    onRowSelectionChange: setSelectedRows, 
+    onRowSelectionChange: setSelectedRows,
   });
 
   return (
-    <div className={css.table}>
+    <div className="custom-table">
       <table>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (

@@ -6,35 +6,39 @@
 
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   padding-right: 20px;
 }
 
 .user_info {
   display: flex;
+  justify-content: center;
   align-items: center;
   padding-right: 10px;
 }
 
 .hello {
   font-size: 18px;
+  margin: 0;
   padding-right: 5px;
 }
 
 .user {
   font-size: 18px;
   text-decoration: underline;
-  color: #085ED6;
+  color: #085ed6;
+  margin: 0;
 }
 
 .button {
   font-size: 18px;
   border: none;
   background-color: #e2e2e2;
-  color: #085ED6;
+  color: #085ed6;
+}
 
-  /* & ::hover {
-    text-decoration: underline;
-  } */
+.button:hover {
+  text-decoration: underline;
 }
 
 .table_container {

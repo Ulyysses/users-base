@@ -1,18 +1,17 @@
-table,
-td,
-th {
+.custom-table table,
+.custom-table td,
+.custom-table th {
   border: 1px solid #ddd;
   text-align: left;
 }
 
-table {
+.custom-table table {
   border-collapse: collapse;
   width: 100%;
   margin-top: 10px;
 }
 
-th,
+.custom-table th,
 td {
   padding: 15px;
 }
-

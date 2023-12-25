@@ -30,17 +30,17 @@ const Table = ({ setSelectedRows, selectedRows }: ITable) => {
   const [data, setData] = useState<UserData[]>([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const collectionRef = collection(db, "users-base");
-      const querySnapshot = await getDocs(collectionRef);
-      const userData: UserData[] = [];
-      querySnapshot.forEach((doc) => {
-        userData.push(doc.data() as UserData);
-      });
-      setData(userData);
-    };
+    const collectionRef = collection(db, "users-base");
 
-    fetchData();
+    const unsubscribe = onSnapshot(collectionRef, (querySnapshot) => {
+      const updatedData: UserData[] = [];
+      querySnapshot.forEach((doc) => {
+        updatedData.push(doc.data() as UserData);
+      });
+      setData(updatedData);
+    });
+
+    return () => unsubscribe();
   }, []);
 
   const columns = [

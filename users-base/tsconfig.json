@@ -25,6 +25,7 @@
     "incremental": true,
     "esModuleInterop": true,
     "plugins": [
+      // Возможно, у вас есть другие плагины, которые вы хотите сохранить
       {
         "name": "next"
       }
@@ -33,11 +34,6 @@
   "include": [
     "src",
     ".next/types/**/*.ts"
-  ],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    }
   ],
   "exclude": [
     "node_modules"

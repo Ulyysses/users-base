@@ -2,9 +2,19 @@ import { useState } from "react";
 import { auth, db } from "../app/page";
 import Table from "../table";
 import css from "./index.module.css";
-import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
 import { RowSelectionState } from "@tanstack/react-table";
-import { deleteUserAdmin } from "../app/actions";
+import {
+  blockUserAdmin,
+  deleteUserAdmin,
+  unblockUserAdmin,
+} from "../app/actions";
 
 interface IBase {
   userName: string;
@@ -43,19 +53,83 @@ const Base = ({ userName, setIsAuthenticated }: IBase) => {
         const docUidToDelete = documentsUid[index];
         const userDocRef = doc(db, "users-base", docUidToDelete);
 
-        auth.currentUser?.getIdToken(true).then(function(idToken) {
-          deleteUserAdmin(docUidToDelete, idToken);
-        }).catch(function(error) {
-          console.log(error);
-          
-        });
+        await auth.currentUser
+          ?.getIdToken(true)
+          .then(function (idToken) {
+            deleteUserAdmin(docUidToDelete, idToken);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
 
         await deleteDoc(userDocRef);
+
+        if (auth.currentUser?.uid === docUidToDelete) {
+          await auth.signOut();
+          setIsAuthenticated(false);
+        }
 
         console.log("Пользователь удален:");
       }
     } catch (error) {
       console.error("Ошибка при удалении пользователя", error);
+    }
+  };
+
+  const blockUserButton = async (indexes: number[]) => {
+    try {
+      for (const index of indexes) {
+        const docUidToBlock = documentsUid[index];
+        const userDocRef = doc(db, "users-base", docUidToBlock);
+
+        await auth.currentUser
+          ?.getIdToken(true)
+          .then(function (idToken) {
+            blockUserAdmin(docUidToBlock, idToken);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+
+        await updateDoc(userDocRef, {
+          status: "Block",
+        });
+
+        if (auth.currentUser?.uid === docUidToBlock) {
+          await auth.signOut();
+          setIsAuthenticated(false);
+        }
+
+        console.log("Пользователь заблокирован:");
+      }
+    } catch (error) {
+      console.error("Ошибка при блокировании пользователя", error);
+    }
+  };
+
+  const unblockUserButton = async (indexes: number[]) => {
+    try {
+      for (const index of indexes) {
+        const docUidToUnblock = documentsUid[index];
+        const userDocRef = doc(db, "users-base", docUidToUnblock);
+
+        await auth.currentUser
+          ?.getIdToken(true)
+          .then(function (idToken) {
+            unblockUserAdmin(docUidToUnblock, idToken);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+
+        await updateDoc(userDocRef, {
+          status: "Active",
+        });
+
+        console.log("Пользователь разблокирован:");
+      }
+    } catch (error) {
+      console.error("Ошибка при разблокировании пользователя", error);
     }
   };
 
@@ -72,7 +146,11 @@ const Base = ({ userName, setIsAuthenticated }: IBase) => {
       </div>
       <div className={css.table_container}>
         <div className={css.buttons_group}>
-          <button type="button" className="btn btn-primary">
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={() => blockUserButton(selectedRowIndexes)}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -84,7 +162,11 @@ const Base = ({ userName, setIsAuthenticated }: IBase) => {
               <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2M5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1" />
             </svg>
           </button>
-          <button type="button" className="btn btn-primary">
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={() => unblockUserButton(selectedRowIndexes)}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"

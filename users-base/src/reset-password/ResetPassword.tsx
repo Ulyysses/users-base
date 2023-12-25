@@ -1,13 +1,11 @@
+"use client"
+
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../app/page";
 import Form from "../form";
 import { useState } from "react";
 
-interface IResetPassword {
-  setActiveComponent: (value: string) => void;
-}
-
-const ResetPassword = ({setActiveComponent}: IResetPassword) => {
+const ResetPassword = () => {
   const [resetMessage, setResetMessage] = useState("");
 
   const resetPasswordButton = (value: { email: string }) => {
@@ -29,12 +27,12 @@ const ResetPassword = ({setActiveComponent}: IResetPassword) => {
       title="Reset password"
       emailInput={true}
       buttonText="Send"
-      alternativeText="Check your email and"
+      alternativeText="Check your email and "
       alternativeLinkText="Sign in"
+      alternativeLink="authentication"
       handleSubmit={resetPasswordButton}
       message={resetMessage}
       setMessage={setResetMessage}
-      setActiveComponent={setActiveComponent}
       activeComponent="Authentication"
     />
   );

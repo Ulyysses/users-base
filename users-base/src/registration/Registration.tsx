@@ -4,11 +4,7 @@ import { auth, db } from "../app/page";
 import Form from "../form";
 import { useState } from "react";
 
-interface IRegistration {
-  setActiveComponent: (value: string) => void;
-}
-
-const Registration = ({setActiveComponent}: IRegistration) => {
+const Registration = () => {
   const [registrationMessage, setRegistrationMessage] = useState("");
 
   const registrationButton = async (value: {
@@ -48,10 +44,10 @@ const Registration = ({setActiveComponent}: IRegistration) => {
       nameInput={true}
       passwordInput={true}
       buttonText="Sign up"
-      alternativeText="Already have an account?"
+      alternativeText="Already have an account? "
       alternativeLinkText="Login"
+      alternativeLink="authentication"
       handleSubmit={registrationButton}
-      setActiveComponent={setActiveComponent}
       activeComponent="Authentication"
       message={registrationMessage}
       setMessage={setRegistrationMessage}

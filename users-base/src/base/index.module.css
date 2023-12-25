@@ -19,7 +19,6 @@
 
 .hello {
   font-size: 18px;
-  margin: 0;
   padding-right: 5px;
 }
 
@@ -27,7 +26,6 @@
   font-size: 18px;
   text-decoration: underline;
   color: #085ed6;
-  margin: 0;
 }
 
 .button {

@@ -1,22 +1,18 @@
+"use client"
+
 import Form from "../form";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../app/page";
 import { formatLastLoginDate } from "../helpers/formateDate";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "../context/authUtils";
 
-interface IAuthentication {
-  setIsAuthenticated: (value: boolean) => void;
-  setUserName: (value: string) => void;
-  setActiveComponent: (value: string) => void;
-}
-
-const Authentication = ({
-  setIsAuthenticated,
-  setUserName,
-  setActiveComponent
-}: IAuthentication) => {
+const Authentication = () => {
   const [errorMessage, setErrorMessage] = useState("");
+  const router = useRouter();
+  const { loginUser } = useAuth();
 
   const authenticationButton = async (value: {
     email: string;
@@ -41,12 +37,11 @@ const Authentication = ({
 
       if (userDoc.exists()) {
         const userName = userDoc.data().name;
+        loginUser(userName);
         await updateDoc(userDocRef, {
           lastlogin: formatLastLoginDate(new Date()),
         });
-        setIsAuthenticated(true);
-        setUserName(userName);
-
+        router.push("base");
         console.log("Sign in");
       } else {
         console.error("User document not found");
@@ -63,13 +58,14 @@ const Authentication = ({
       emailInput={true}
       passwordInput={true}
       buttonText="Sign in"
-      alternativeText="Forgot your password?"
+      alternativeText="Forgot your password? "
       alternativeLinkText="Reset password"
+      alternativeLink="reset-password"
       handleSubmit={authenticationButton}
       message={errorMessage}
       setMessage={setErrorMessage}
-      setActiveComponent={setActiveComponent}
       activeComponent="Reset password"
+      extraLink="Registration"
     />
   );
 };

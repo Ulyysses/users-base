@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { auth, db } from "../app/page";
 import Table from "../table";
@@ -15,19 +17,21 @@ import {
   deleteUserAdmin,
   unblockUserAdmin,
 } from "../app/actions";
+import { useRouter } from "next/navigation";
+import { useAuth } from "../context/authUtils";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
-interface IBase {
-  userName: string;
-  setIsAuthenticated: (value: boolean) => void;
-}
-
-const Base = ({ userName, setIsAuthenticated }: IBase) => {
+const Base = () => {
   const [selectedRows, setSelectedRows] = useState<RowSelectionState>({});
+  const router = useRouter();
+  const { authState, logoutUser } = useAuth();
+  const { userName, isAuthenticated } = authState;
 
   const signOut = async () => {
     try {
       await auth.signOut();
-      setIsAuthenticated(false);
+      router.push("authentication");
+      logoutUser();
       console.log("Logout completed successfully");
     } catch (error) {
       console.error("Error when logging out:", error);
@@ -66,8 +70,17 @@ const Base = ({ userName, setIsAuthenticated }: IBase) => {
 
         if (auth.currentUser?.uid === docUidToDelete) {
           await auth.signOut();
-          setIsAuthenticated(false);
+          router.push("authentication");
+          logoutUser();
         }
+
+        const tempUser = await signInWithEmailAndPassword(
+          auth,
+          "temp@example.com",
+          "tempPassword"
+        );
+        await auth.signOut();
+        await tempUser.user?.delete();
 
         console.log("Пользователь удален:");
       }
@@ -97,7 +110,8 @@ const Base = ({ userName, setIsAuthenticated }: IBase) => {
 
         if (auth.currentUser?.uid === docUidToBlock) {
           await auth.signOut();
-          setIsAuthenticated(false);
+          router.push("authentication");
+          logoutUser();
         }
 
         console.log("Пользователь заблокирован:");
@@ -134,6 +148,7 @@ const Base = ({ userName, setIsAuthenticated }: IBase) => {
   };
 
   return (
+    isAuthenticated ? (
     <>
       <div className={css.user_info_wrapper}>
         <div className={css.user_info}>
@@ -198,6 +213,7 @@ const Base = ({ userName, setIsAuthenticated }: IBase) => {
         <Table setSelectedRows={setSelectedRows} selectedRows={selectedRows} />
       </div>
     </>
+    ) : router.push("authentication")
   );
 };
 

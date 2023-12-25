@@ -17,7 +17,7 @@
 }
 
 .error_message {
-  color: #F60414;
+  color: #f60414;
 }
 
 .title {
@@ -26,11 +26,11 @@
 
 .switching_button {
   font-weight: bold;
-  color: #085ED6;
+  color: #085ed6;
   background-color: #ffffff;
   border: none;
+}
 
-  /* &:hover {
-    text-decoration: underline;
-  } */
+.switching_button:hover {
+  text-decoration: underline;
 }

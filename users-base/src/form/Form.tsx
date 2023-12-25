@@ -3,6 +3,7 @@ import PasswordInput from "../inputs/password-input";
 import NameInput from "../inputs/name-input";
 import css from "./index.module.css";
 import { ChangeEvent, useState } from "react";
+import Link from "next/link";
 
 interface IForm {
   title: string;
@@ -12,11 +13,17 @@ interface IForm {
   buttonText: string;
   alternativeText: string;
   alternativeLinkText: string;
-  handleSubmit: (value: { email: string; name: string, password: string }) => void;
+  alternativeLink: string;
+  handleSubmit: (value: {
+    email: string;
+    name: string;
+    password: string;
+  }) => void;
   message: string;
   setMessage: (value: string) => void;
-  setActiveComponent: (value: string) => void;
+  setActiveComponent?: (value: string) => void;
   activeComponent: string;
+  extraLink: string;
 }
 
 const Form = ({
@@ -27,11 +34,11 @@ const Form = ({
   buttonText,
   alternativeText,
   alternativeLinkText,
+  alternativeLink,
   handleSubmit,
   message,
   setMessage,
-  setActiveComponent,
-  activeComponent
+  extraLink,
 }: IForm) => {
   const [value, setValue] = useState({
     name: "",
@@ -48,10 +55,6 @@ const Form = ({
     };
     setValue(newValue);
     setMessage?.("");
-  };
-
-  const changeActiveComponent = () => {
-    setActiveComponent(activeComponent);
   };
 
   return (
@@ -75,10 +78,11 @@ const Form = ({
         {message && <p className={css.error_message}>{message}</p>}
         <p>
           {alternativeText}
-          <button onClick={changeActiveComponent} className={css.switching_button}>
+          <Link href={alternativeLink} className={css.switching_button}>
             {alternativeLinkText}
-          </button>
+          </Link>
         </p>
+        {extraLink && <Link href="/" className={css.switching_button}>{extraLink}</Link>}
       </div>
     </section>
   );

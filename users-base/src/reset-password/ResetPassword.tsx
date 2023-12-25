@@ -33,6 +33,7 @@ const ResetPassword = ({setActiveComponent}: IResetPassword) => {
       alternativeLinkText="Sign in"
       handleSubmit={resetPasswordButton}
       message={resetMessage}
+      setMessage={setResetMessage}
       setActiveComponent={setActiveComponent}
       activeComponent="Authentication"
     />

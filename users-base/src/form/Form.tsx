@@ -13,7 +13,8 @@ interface IForm {
   alternativeText: string;
   alternativeLinkText: string;
   handleSubmit: (value: { email: string; name: string, password: string }) => void;
-  message?: string;
+  message: string;
+  setMessage: (value: string) => void;
   setActiveComponent: (value: string) => void;
   activeComponent: string;
 }
@@ -28,6 +29,7 @@ const Form = ({
   alternativeLinkText,
   handleSubmit,
   message,
+  setMessage,
   setActiveComponent,
   activeComponent
 }: IForm) => {
@@ -45,6 +47,7 @@ const Form = ({
       [event.target.name]: event.target.value,
     };
     setValue(newValue);
+    setMessage?.("");
   };
 
   const changeActiveComponent = () => {

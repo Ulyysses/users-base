@@ -43,7 +43,6 @@ const Authentication = ({
         const userName = userDoc.data().name;
         await updateDoc(userDocRef, {
           lastlogin: formatLastLoginDate(new Date()),
-          status: "Active",
         });
         setIsAuthenticated(true);
         setUserName(userName);
@@ -68,6 +67,7 @@ const Authentication = ({
       alternativeLinkText="Reset password"
       handleSubmit={authenticationButton}
       message={errorMessage}
+      setMessage={setErrorMessage}
       setActiveComponent={setActiveComponent}
       activeComponent="Reset password"
     />

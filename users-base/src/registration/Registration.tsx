@@ -31,6 +31,7 @@ const Registration = ({setActiveComponent}: IRegistration) => {
         await setDoc(userDocRef, {
           email: value.email,
           name: value.name,
+          status: "Active",
         });
 
         setRegistrationMessage("New user added to Firestore!");
@@ -53,6 +54,7 @@ const Registration = ({setActiveComponent}: IRegistration) => {
       setActiveComponent={setActiveComponent}
       activeComponent="Authentication"
       message={registrationMessage}
+      setMessage={setRegistrationMessage}
     />
   );
 };

@@ -1,7 +1,4 @@
-// "use server";
-
 import { cert, getApp, initializeApp } from "firebase-admin/app";
-// import serviceAccount from "../src/assets/key/key.json" assert { type: "json" };
 
 const getAppAdmin = () => {
   try {

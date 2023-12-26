@@ -1,5 +1,4 @@
 import classNames from "classnames";
-import css from "./index.module.css";
 import { ChangeEvent } from "react";
 
 interface IPasswordInputProps {

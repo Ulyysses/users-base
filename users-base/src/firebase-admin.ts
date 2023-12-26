@@ -1,6 +1,6 @@
 import { cert, getApp, initializeApp } from "firebase-admin/app";
 
-const getAppAdmin = () => {
+const getAppAdmin = () => {  
   try {
     return getApp();
   } catch {
@@ -8,7 +8,7 @@ const getAppAdmin = () => {
       credential: cert({
         projectId: process.env.ADMIN_PROJECT_ID,
         clientEmail: process.env.ADMIN_CLIENT_EMAIL,
-        privateKey: process.env.ADMIN_PRIVATE_KEY,
+        privateKey: process.env.ADMIN_PRIVATE_KEY?.replace(/\\n/gm, "\n"),
       }),
     });
   }

@@ -29,7 +29,6 @@ const Base = () => {
   const signOut = async () => {
     try {
       await auth.signOut();
-      router.push("authentication");
       logoutUser();
       console.log("Logout completed successfully");
     } catch (error) {
@@ -64,7 +63,6 @@ const Base = () => {
           .catch(function (error) {
             if (error.code === "auth/user-disabled") {
               auth.signOut();
-              router.push("authentication");
               logoutUser();
               return;
             }
@@ -74,7 +72,6 @@ const Base = () => {
 
         if (auth.currentUser?.uid === docUidToDelete) {
           await auth.signOut();
-          router.push("authentication");
           logoutUser();
         }
 
@@ -99,7 +96,6 @@ const Base = () => {
           .catch(function (error) {
             if (error.code === "auth/user-disabled") {
               auth.signOut();
-              router.push("authentication");
               logoutUser();
               return;
             }
@@ -111,7 +107,6 @@ const Base = () => {
 
         if (auth.currentUser?.uid === docUidToBlock) {
           await auth.signOut();
-          router.push("authentication");
           logoutUser();
         }
 
@@ -136,7 +131,6 @@ const Base = () => {
           .catch(function (error) {
             if (error.code === "auth/user-disabled") {
               auth.signOut();
-              router.push("authentication");
               logoutUser();
               return;
             }

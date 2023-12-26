@@ -15,7 +15,7 @@ export default function RootLayout({
         <title>Users base</title>
       </head>
 
-      <body><AuthProvider>{children}</AuthProvider></body>
+      <body suppressHydrationWarning={true}><AuthProvider>{children}</AuthProvider></body>
     </html>
   );
 }

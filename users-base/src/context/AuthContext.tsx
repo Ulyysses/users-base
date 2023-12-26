@@ -1,6 +1,6 @@
 "use client"
 
-import { ReactNode, createContext, useState } from "react";
+import { ReactNode, createContext, useCallback, useState } from "react";
 
 interface IAuthProvider {
   children: ReactNode;
@@ -23,19 +23,19 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
     userName: "",
   });
 
-  const loginUser = (userName: string) => {
+  const loginUser = useCallback((userName: string) => {
     setAuthState({
       isAuthenticated: true,
       userName,
     });
-  };
+  }, []);
 
-  const logoutUser = () => {
+  const logoutUser = useCallback(() => {
     setAuthState({
       isAuthenticated: false,
       userName: "",
     });
-  };
+  }, []);
 
   return (
     <AuthContext.Provider value={{ authState, loginUser, logoutUser }}>

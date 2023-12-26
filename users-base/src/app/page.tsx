@@ -7,15 +7,14 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBim7UV1IgbZNIPIUxW6o6OIB5YL2gu4vY",
-  authDomain: "users-base-e4174.firebaseapp.com",
-  databaseURL:
-    "https://users-base-e4174-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "users-base-e4174",
-  storageBucket: "users-base-e4174.appspot.com",
-  messagingSenderId: "248062882333",
-  appId: "1:248062882333:web:fefbd30b21db9664268cf4",
-  measurementId: "G-VS6JY591VC",
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.FIREBASE_DATABASE_URL,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);

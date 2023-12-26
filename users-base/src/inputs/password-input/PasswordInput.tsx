@@ -6,9 +6,10 @@ interface IPasswordInputProps {
     password: string;
   };
   changeValue: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  autoComplete?: string;
 }
 
-const PasswordInput = ({ value, changeValue }: IPasswordInputProps) => {
+const PasswordInput = ({ value, changeValue, autoComplete }: IPasswordInputProps) => {
   return (
     <div className="mb-3 row">
       <label htmlFor="password" className="col-sm-2 col-form-label">
@@ -22,6 +23,7 @@ const PasswordInput = ({ value, changeValue }: IPasswordInputProps) => {
           name="password"
           value={value.password}
           onChange={changeValue}
+          autoComplete={autoComplete ? "current-password" : undefined}
         />
       </div>
     </div>

@@ -66,6 +66,7 @@ const Authentication = () => {
       setMessage={setErrorMessage}
       activeComponent="Reset password"
       extraLink="Registration"
+      autoComplete={"current-password"}
     />
   );
 };

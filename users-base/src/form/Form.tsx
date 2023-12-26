@@ -24,6 +24,7 @@ interface IForm {
   setActiveComponent?: (value: string) => void;
   activeComponent: string;
   extraLink?: string;
+  autoComplete?: string;
 }
 
 const Form = ({
@@ -39,6 +40,7 @@ const Form = ({
   message,
   setMessage,
   extraLink,
+  autoComplete
 }: IForm) => {
   const [value, setValue] = useState({
     name: "",
@@ -64,7 +66,7 @@ const Form = ({
         {emailInput && <EmailInput changeValue={changeValue} value={value} />}
         {nameInput && <NameInput changeValue={changeValue} value={value} />}
         {passwordInput && (
-          <PasswordInput changeValue={changeValue} value={value} />
+          <PasswordInput changeValue={changeValue} value={value} autoComplete={autoComplete}/>
         )}
         <button
           type="button"

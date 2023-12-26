@@ -154,7 +154,8 @@ const Base = () => {
   };
 
   if (!isAuthenticated) {
-    return;
+    router.push("authentication");
+    return null;
   }
 
   return (

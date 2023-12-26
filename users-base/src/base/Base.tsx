@@ -153,7 +153,11 @@ const Base = () => {
     }
   };
 
-  return isAuthenticated ? (
+  if (!isAuthenticated) {
+    return;
+  }
+
+  return (
     <>
       <div className={css.user_info_wrapper}>
         <div className={css.user_info}>
@@ -218,8 +222,6 @@ const Base = () => {
         <Table setSelectedRows={setSelectedRows} selectedRows={selectedRows} />
       </div>
     </>
-  ) : (
-    router.push("authentication")
   );
 };
 

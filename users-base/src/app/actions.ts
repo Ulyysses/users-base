@@ -8,13 +8,9 @@ export async function deleteUserAdmin(userUid: string, token: string) {
     await getAuth(app).verifyIdToken(token, true);
     await getAuth(app).deleteUser(userUid);
     await getAuth(app).revokeRefreshTokens(userUid);
-    console.log("Пользователь успешно удален, токены обновления отозваны");
+    console.log("User is deleted, token revoked");
   } catch (error) {
-    if (error.code === "auth/id-token-revoked") {
-      console.log("Токен был отозван.");
-    } else {
-      console.error("Ошибка при удалении пользователя или отзыве токенов:", error);
-    }
+    console.error(error);
   }
 }
 
@@ -25,13 +21,9 @@ export async function blockUserAdmin(userUid: string, token: string) {
       disabled: true,
     });
     await getAuth(app).revokeRefreshTokens(userUid);
-    console.log("Пользователь успешно заблокирован, токены обновления отозваны");
+    console.log("User is blocked, token revoked");
   } catch (error) {
-    if (error.code === "auth/id-token-revoked") {
-      console.log("Токен был отозван.");
-    } else {
-      console.error("Ошибка при блокировании пользователя или отзыве токенов:", error);
-    }
+    console.error(error);
   }
 }
 

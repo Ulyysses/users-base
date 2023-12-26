@@ -19,7 +19,6 @@ import {
 } from "../app/actions";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../context/authUtils";
-import { signInWithEmailAndPassword } from "firebase/auth";
 
 const Base = () => {
   const [selectedRows, setSelectedRows] = useState<RowSelectionState>({});
@@ -63,7 +62,12 @@ const Base = () => {
             deleteUserAdmin(docUidToDelete, idToken);
           })
           .catch(function (error) {
-            console.log(error);
+            if (error.code === "auth/user-disabled") {
+              auth.signOut();
+              router.push("authentication");
+              logoutUser();
+              return;
+            }
           });
 
         await deleteDoc(userDocRef);
@@ -73,14 +77,6 @@ const Base = () => {
           router.push("authentication");
           logoutUser();
         }
-
-        const tempUser = await signInWithEmailAndPassword(
-          auth,
-          "temp@example.com",
-          "tempPassword"
-        );
-        await auth.signOut();
-        await tempUser.user?.delete();
 
         console.log("Пользователь удален:");
       }
@@ -98,10 +94,15 @@ const Base = () => {
         await auth.currentUser
           ?.getIdToken(true)
           .then(function (idToken) {
-            blockUserAdmin(docUidToBlock, idToken);
+            return blockUserAdmin(docUidToBlock, idToken);
           })
           .catch(function (error) {
-            console.log(error);
+            if (error.code === "auth/user-disabled") {
+              auth.signOut();
+              router.push("authentication");
+              logoutUser();
+              return;
+            }
           });
 
         await updateDoc(userDocRef, {
@@ -133,7 +134,12 @@ const Base = () => {
             unblockUserAdmin(docUidToUnblock, idToken);
           })
           .catch(function (error) {
-            console.log(error);
+            if (error.code === "auth/user-disabled") {
+              auth.signOut();
+              router.push("authentication");
+              logoutUser();
+              return;
+            }
           });
 
         await updateDoc(userDocRef, {
@@ -147,8 +153,7 @@ const Base = () => {
     }
   };
 
-  return (
-    isAuthenticated ? (
+  return isAuthenticated ? (
     <>
       <div className={css.user_info_wrapper}>
         <div className={css.user_info}>
@@ -213,7 +218,8 @@ const Base = () => {
         <Table setSelectedRows={setSelectedRows} selectedRows={selectedRows} />
       </div>
     </>
-    ) : router.push("authentication")
+  ) : (
+    router.push("authentication")
   );
 };
 

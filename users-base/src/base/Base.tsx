@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { auth, db } from "../config";
 import Table from "../table";
 import css from "./index.module.css";
@@ -147,8 +147,13 @@ const Base = () => {
     }
   };
 
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push("authentication");
+    }
+  }, [isAuthenticated, router])
+
   if (!isAuthenticated) {
-    router.push("authentication");
     return null;
   }
 

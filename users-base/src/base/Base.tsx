@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { auth, db } from "../app/page";
+import { auth, db } from "../config";
 import Table from "../table";
 import css from "./index.module.css";
 import {

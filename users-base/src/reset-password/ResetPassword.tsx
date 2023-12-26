@@ -1,7 +1,7 @@
 "use client"
 
 import { sendPasswordResetEmail } from "firebase/auth";
-import { auth } from "../app/page";
+import { auth } from "../config";
 import Form from "../form";
 import { useState } from "react";
 

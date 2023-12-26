@@ -23,7 +23,7 @@ interface IForm {
   setMessage: (value: string) => void;
   setActiveComponent?: (value: string) => void;
   activeComponent: string;
-  extraLink: string;
+  extraLink?: string;
 }
 
 const Form = ({

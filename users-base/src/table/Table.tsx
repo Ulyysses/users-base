@@ -6,7 +6,7 @@ import {
   OnChangeFn,
   Row,
 } from "@tanstack/react-table";
-import { db } from "../app/page";
+import { db } from "../config";
 import { collection, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import IndeterminateCheckbox from "../indeterminate-checkbox";

@@ -3,7 +3,7 @@
 import Form from "../form";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { auth, db } from "../app/page";
+import { auth, db } from "../config";
 import { formatLastLoginDate } from "../helpers/formateDate";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
